@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>آزمون تعاملی ۱۰ سوالی: ثبت‌های تعدیلی و اصلاحی پایان سال | @financialmind_ir</title>
+
+  <!-- بارگذاری فونت فارسی وزیرمتن از گوگل -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- بارگذاری Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Vazirmatn', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            navyBase: '#0b1120',
+            navyCard: '#111827',
+            navyElev: '#1e293b',
+            goldAccent: '#d4af37',
+            goldSoft: '#f3d27a',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    body {
+      font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+      background-color: #0b1120;
+      color: #f1f5f9;
+      font-variant-numeric: tabular-nums;
+      overflow-x: hidden;
+    }
+
+    /* پس‌زمینه ظریف شبکه‌ای مالی متناسب با تم سرمه‌ای-طلایی */
+    .accounting-bg {
+      background-color: #0b1120;
+      background-image:
+        radial-gradient(circle at 15% 10%, rgba(212, 175, 55, 0.10), transparent 40%),
+        radial-gradient(circle at 85% 20%, rgba(56, 189, 248, 0.07), transparent 45%),
+        linear-gradient(to right, rgba(212, 175, 55, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+    }
+
+    /* کارت‌های استاندارد با عمق بصری و حاشیه ظریف طلایی */
+    .glass-card {
+      background: linear-gradient(155deg, rgba(17, 24, 39, 0.96) 0%, rgba(15, 23, 42, 0.94) 100%);
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(243, 210, 122, 0.08);
+    }
+
+    /* انیمیشن نرم باز شدن توضیح تشریحی */
+    @keyframes revealFeedback {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .feedback-reveal {
+      animation: revealFeedback 0.24s ease-out forwards;
+    }
+
+    /* دکمه گزینه چهارگزینه‌ای */
+    .option-btn {
+      transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .option-btn:not(:disabled):active {
+      transform: scale(0.99);
+    }
+  </style>
+</head>
+<body class="accounting-bg min-h-screen flex flex-col justify-between selection:bg-[#d4af37] selection:text-[#0b1120]">
+
+  <!-- هدر بالایی صفحه با آواتار دایره‌ای و برندینگ پیج -->
+  <header class="sticky top-0 z-30 border-b border-slate-800/90 bg-[#0b1120]/85 backdrop-blur-md">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <!-- آواتار دایره‌ای با fallback خودکار در صورت نبود فایل تصویر -->
+        <div class="relative shrink-0">
+          <img
+            id="avatarImg"
+            src="1000061851_2.png"
+            alt="مجید پورمهدی"
+            onerror="handleAvatarError(this)"
+            class="w-11 h-11 rounded-full object-cover object-center border-2 border-[#d4af37] ring-2 ring-[#d4af37]/25"
+          />
+          <div
+            id="avatarFallback"
+            aria-hidden="true"
+            class="hidden w-11 h-11 rounded-full bg-gradient-to-br from-[#d4af37] to-[#9a7818] text-[#0b1120] font-black text-sm items-center justify-center border-2 border-[#f3d27a] shadow-md"
+          >
+            FM
+          </div>
+        </div>
+
+        <div class="min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#d4af37]/15 text-[#f3d27a] border border-[#d4af37]/35">
+              آزمون تعاملی حسابداری
+            </span>
+            <span class="text-xs font-semibold text-slate-400" dir="ltr">@financialmind_ir</span>
+          </div>
+          <h1 class="text-sm sm:text-base font-extrabold text-white truncate mt-0.5">
+            ثبت‌های تعدیلی و اصلاحی پایان سال
+          </h1>
+        </div>
+      </div>
+
+      <!-- دکمه شروع مجدد سریع در هدر -->
+      <button
+        id="headerResetBtn"
+        type="button"
+        class="px-3 py-2 rounded-xl text-xs font-bold bg-[#1e293b] hover:bg-slate-700 text-[#f3d27a] border border-[#d4af37]/30 transition shrink-0 cursor-pointer"
+        title="شروع مجدد آزمون"
+      >
+        شروع مجدد
+      </button>
+    </div>
+
+    <!-- نوار پیشرفت پاسخ‌گویی به سوالات -->
+    <div class="w-full h-1.5 bg-slate-900">
+      <div
+        id="topProgressBar"
+        class="h-full bg-gradient-to-l from-[#f3d27a] via-[#d4af37] to-amber-500 transition-all duration-300"
+        style="width: 0%;"
+      ></div>
+    </div>
+  </header>
+
+  <!-- پیام اطلاع‌رسانی شناور (جایگزین alert) -->
+  <div
+    id="toastBox"
+    role="status"
+    aria-live="polite"
+    class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-2 transition-all duration-300"
+  >
+    <div id="toastText" class="px-4 py-2.5 rounded-2xl bg-[#111827] border border-[#d4af37]/60 text-[#f3d27a] text-xs sm:text-sm font-bold shadow-2xl">
+      انجام شد!
+    </div>
+  </div>
+
+  <!-- محتوای اصلی -->
+  <main class="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
+
+    <!-- کارت معرفی و وضعیت لحظه‌ای آزمون -->
+    <section class="glass-card rounded-3xl p-5 sm:p-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="space-y-1.5">
+          <h2 class="text-lg sm:text-2xl font-black text-white leading-snug">
+            محک خودتان در ثبت‌های تعدیلی پایان دوره مالی
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
+            با انتخاب هر گزینه، پاسخ شما <strong class="text-[#f3d27a]">در لحظه تصحیح</strong> می‌شود و توضیح دقیق حسابداری نمایش داده خواهد شد. در نهایت با زدن دکمه محاسبه نمره، تحلیل هوشمند نقاط قوت و ضعف خود را ببینید.
+          </p>
+        </div>
+
+        <!-- شاخص‌های عددی وضعیت -->
+        <div class="grid grid-cols-3 gap-2.5 shrink-0">
+          <div class="rounded-2xl bg-[#0b1120]/80 border border-slate-700/80 px-3 py-2.5 text-center">
+            <div class="text-[11px] text-slate-400">پاسخ‌داده‌شده</div>
+            <div id="statAnswered" class="text-base sm:text-lg font-black text-white mt-0.5">۰ از ۱۰</div>
+          </div>
+          <div class="rounded-2xl bg-[#0b1120]/80 border border-emerald-500/25 px-3 py-2.5 text-center">
+            <div class="text-[11px] text-emerald-300/80">پاسخ صحیح</div>
+            <div id="statCorrect" class="text-base sm:text-lg font-black text-emerald-400 mt-0.5">۰</div>
+          </div>
+          <div class="rounded-2xl bg-[#0b1120]/80 border border-[#d4af37]/30 px-3 py-2.5 text-center">
+            <div class="text-[11px] text-[#f3d27a]/85">نمره فعلی</div>
+            <div id="statScore" class="text-base sm:text-lg font-black text-[#f3d27a] mt-0.5">۰</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- نوار فیلتر سریع یا پرش به سوالات -->
+      <div class="mt-5 pt-4 border-t border-slate-800/90 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-1.5 flex-wrap" id="questionJumpNav" aria-label="فهرست شماره سوالات"></div>
+        <span class="text-xs text-slate-400">هر سوال ۱۰ نمره (مجموع ۱۰۰ نمره)</span>
+      </div>
+    </section>
+
+    <!-- کانتینر ۱۰ سوال آزمون -->
+    <section id="questionsContainer" class="space-y-5" aria-label="سوالات آزمون"></section>
+
+    <!-- پنل اقدام نهایی: محاسبه نمره و تحلیل هوشمند -->
+    <section id="submitPanel" class="glass-card rounded-3xl p-5 sm:p-6">
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <h3 class="text-base sm:text-lg font-extrabold text-white">
+            آماده دیدن کارنامه و تحلیل هوشمند هستید؟
+          </h3>
+          <p id="submitHintText" class="text-xs sm:text-sm text-slate-400">
+            می‌توانید همین الان یا پس از پاسخ به هر ۱۰ سوال، نمره و تحلیل موضوعی خود را محاسبه کنید.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+          <button
+            id="btnResetBottom"
+            type="button"
+            class="px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold bg-[#1e293b] hover:bg-slate-700 text-slate-200 border border-slate-600/70 transition cursor-pointer"
+          >
+            شروع مجدد آزمون
+          </button>
+          <button
+            id="btnCalculateSmart"
+            type="button"
+            class="px-5 py-3 rounded-2xl text-xs sm:text-sm font-black bg-gradient-to-l from-[#f3d27a] to-[#d4af37] hover:brightness-105 text-[#0b1120] shadow-lg shadow-[#d4af37]/20 transition cursor-pointer"
+          >
+            محاسبه نمره و تحلیل هوشمند
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- بخش کارنامه نهایی و تحلیل هوشمند (پس از کلیک روی دکمه محاسبه نمایش داده می‌شود) -->
+    <section id="resultSection" class="hidden glass-card rounded-3xl p-5 sm:p-7 border-2 border-[#d4af37]/45 feedback-reveal space-y-6" aria-live="polite">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-5 pb-5 border-b border-slate-800">
+        <div class="space-y-2">
+          <span id="scoreTierBadge" class="inline-block px-3 py-1 rounded-full text-xs font-extrabold bg-[#d4af37]/20 text-[#f3d27a] border border-[#d4af37]/40">
+            سطح عملکرد
+          </span>
+          <h2 id="scoreHeadline" class="text-xl sm:text-2xl font-black text-white">
+            نتیجه آزمون شما
+          </h2>
+          <p id="scoreEncouragement" class="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl"></p>
+        </div>
+
+        <!-- نمایش نمره بزرگ از ۱۰۰ -->
+        <div class="rounded-3xl bg-[#0b1120] border border-[#d4af37]/50 px-6 py-4 text-center shrink-0">
+          <div class="text-xs text-slate-400 font-semibold">نمره نهایی شما</div>
+          <div class="flex items-baseline justify-center gap-1 mt-1">
+            <span id="finalScoreNumber" class="text-3xl sm:text-4xl font-black text-[#f3d27a]">۰</span>
+            <span class="text-sm font-bold text-slate-400">/ ۱۰۰</span>
+          </div>
+          <div id="finalAccuracyText" class="text-xs text-emerald-400 font-bold mt-1">۰ از ۱۰ پاسخ صحیح</div>
+        </div>
+      </div>
+
+      <!-- تحلیل هوشمند تفکیکی بر اساس محورهای آموزشی -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <h3 class="text-base sm:text-lg font-extrabold text-[#f3d27a]">
+            تحلیل هوشمند عملکرد بر اساس محورهای حسابداری
+          </h3>
+          <span class="text-xs text-slate-400">تشخیص خودکار نقاط قوت و نیاز به مرور</span>
+        </div>
+        <div id="topicBreakdownGrid" class="grid grid-cols-1 md:grid-cols-3 gap-3.5"></div>
+      </div>
+
+      <!-- جمع‌بندی نقاط قوت و پیشنهاد مطالعه -->
+      <div id="smartDiagnosticBox" class="rounded-2xl bg-[#0b1120]/85 border border-slate-700/80 p-4 sm:p-5 space-y-2 text-xs sm:text-sm text-slate-200 leading-relaxed"></div>
+
+      <!-- دکمه‌های کپی خلاصه نتیجه و شروع مجدد -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+        <button
+          id="btnCopySummary"
+          type="button"
+          class="px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold bg-[#d4af37] hover:bg-[#f3d27a] text-[#0b1120] transition flex items-center gap-2 cursor-pointer"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span>کپی خلاصه نتیجه</span>
+        </button>
+
+        <button
+          id="btnRetakeQuiz"
+          type="button"
+          class="px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-[#1e293b] hover:bg-slate-700 text-slate-200 border border-slate-600 transition cursor-pointer"
+        >
+          شروع مجدد آزمون
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- فوتر ساده -->
+  <footer class="border-t border-slate-800/90 bg-[#0b1120]/90 py-4 px-4 text-center text-xs text-slate-400">
+    آزمون آموزشی حسابداری • <span class="text-[#d4af37] font-bold" dir="ltr">@financialmind_ir</span> — هر سوال ۱۰ نمره
+  </footer>
+
+  <script>
+    /**
+     * محورهای تحلیلی هوشمند برای دسته‌بندی عملکرد کاربر
+     */
+    const TOPICS = {
+      CONCEPTS: {
+        id: 'CONCEPTS',
+        title: 'مفاهیم، منطق تعدیل و تله‌ها',
+        short: 'مفاهیم و منطق تعدیل'
+      },
+      PREPAYMENTS: {
+        id: 'PREPAYMENTS',
+        title: 'پیش‌پرداخت‌ها و پیش‌دریافت‌ها',
+        short: 'پیش‌پرداخت‌ها و پیش‌دریافت‌ها'
+      },
+      ACCRUALS_DEPR: {
+        id: 'ACCRUALS_DEPR',
+        title: 'اقلام تحقق‌یافته، استهلاک و برآوردها',
+        short: 'اقلام تحقق‌یافته و استهلاک'
+      }
+    };
+
+    /**
+     * بانک ۱۰ سوال چهارگزینه‌ای استاندارد در زمینه ثبت‌های تعدیلی و اصلاحی پایان سال
+     */
+    const QUIZ_QUESTIONS = [
+      {
+        id: 1,
+        topic: TOPICS.CONCEPTS.id,
+        topicLabel: TOPICS.CONCEPTS.short,
+        question: 'هدف اصلی انجام ثبت‌های تعدیلی در پایان دوره مالی (مانند ۲۹ اسفند) چیست؟',
+        options: [
+          'ثبت دریافت و پرداخت‌های نقدی انجام‌شده در طول سال',
+          'بستن حساب‌های دائمی و انتقال سود خالص به سال بعد',
+          'اعمال مبنای تعهدی و رعایت اصل تطابق درآمدها و هزینه‌ها برای واقعی شدن مانده حساب‌ها',
+          'جایگزینی صورت مغایرت بانکی در پایان سال مالی'
+        ],
+        correctIndex: 2,
+        explanation:
+          'ثبت‌های تعدیلی برای تطبیق حساب‌ها با مبنای تعهدی و اصل تطابق هزینه‌ها با درآمدهای همان دوره انجام می‌شوند تا گزارش‌های سود و زیان و ترازنامه واقع‌بینانه باشند.'
+      },
+      {
+        id: 2,
+        topic: TOPICS.CONCEPTS.id,
+        topicLabel: TOPICS.CONCEPTS.short,
+        question: 'قانون طلایی در ساختار اکثر ثبت‌های تعدیلی پایان سال چیست؟',
+        options: [
+          'همواره یک طرف حساب نقدی (صندوق یا بانک) و طرف دیگر حساب سرمایه است',
+          'یک طرف آن یک حساب ترازنامه‌ای (دارایی یا بدهی) و طرف دیگر یک حساب سود و زیانی (درآمد یا هزینه) است',
+          'هر دو طرف ثبت تعدیلی باید از جنس حساب‌های درآمد و هزینه باشند',
+          'تنها روی حساب‌های مشتریان و تامین‌کنندگان تجاری اثر می‌گذارد'
+        ],
+        correctIndex: 1,
+        explanation:
+          'در ثبت‌های تعدیلی، یک حساب به ترازنامه (دارایی یا بدهی) و حساب دیگر به صورت سود و زیان (هزینه یا درآمد) مربوط است و معمولاً وجه نقد به‌صورت مستقیم در آن دخالت ندارد.'
+      },
+      {
+        id: 3,
+        topic: TOPICS.PREPAYMENTS.id,
+        topicLabel: TOPICS.PREPAYMENTS.short,
+        question:
+          'در تاریخ ۱ مهر، بیمه یک‌ساله به مبلغ ۱۲۰,۰۰۰,۰۰۰ ریال پرداخت و در حساب «بیمه پیش‌پرداخت‌شده» ثبت شده است. ثبت تعدیلی پایان سال (۶ ماه گذشته) کدام است؟',
+        options: [
+          'بدهکار: هزینه بیمه ۶۰,۰۰۰,۰۰۰ ریال | بستانکار: بیمه پیش‌پرداخت‌شده ۶۰,۰۰۰,۰۰۰ ریال',
+          'بدهکار: بیمه پیش‌پرداخت‌شده ۶۰,۰۰۰,۰۰۰ ریال | بستانکار: هزینه بیمه ۶۰,۰۰۰,۰۰۰ ریال',
+          'بدهکار: هزینه بیمه ۱۲۰,۰۰۰,۰۰۰ ریال | بستانکار: بانک ۱۲۰,۰۰۰,۰۰۰ ریال',
+          'بدهکار: هزینه بیمه ۲۰,۰۰۰,۰۰۰ ریال | بستانکار: بیمه پیش‌پرداخت‌شده ۲۰,۰۰۰,۰۰۰ ریال'
+        ],
+        correctIndex: 0,
+        explanation:
+          'مبلغ بیمه منقضی‌شده در ۶ ماه (مهر تا اسفند) برابر است با (۱۲۰,۰۰۰,۰۰۰ ÷ ۱۲) × ۶ = ۶۰,۰۰۰,۰۰۰ ریال. بنابراین هزینه بیمه بدهکار و بیمه پیش‌پرداخت‌شده بستانکار می‌شود.'
+      },
+      {
+        id: 4,
+        topic: TOPICS.PREPAYMENTS.id,
+        topicLabel: TOPICS.PREPAYMENTS.short,
+        question:
+          'در ۱ دی، بابت ارائه خدمات مشاوره ۴ ماهه مبلغ ۸۰,۰۰۰,۰۰۰ ریال دریافت و در «پیش‌دریافت درآمد مشاوره» ثبت شده است. تا پایان سال (۳ ماه دی، بهمن، اسفند) چه مبلغی درآمد محسوب می‌شود؟',
+        options: [
+          '۲۰,۰۰۰,۰۰۰ ریال (بدهکار: درآمد مشاوره | بستانکار: پیش‌دریافت درآمد مشاوره)',
+          '۶۰,۰۰۰,۰۰۰ ریال (بدهکار: پیش‌دریافت درآمد مشاوره | بستانکار: درآمد مشاوره)',
+          '۸۰,۰۰۰,۰۰۰ ریال (بدهکار: پیش‌دریافت درآمد مشاوره | بستانکار: درآمد مشاوره)',
+          '۶۰,۰۰۰,۰۰۰ ریال (بدهکار: درآمد مشاوره | بستانکار: پیش‌دریافت درآمد مشاوره)'
+        ],
+        correctIndex: 1,
+        explanation:
+          'از ۸۰,۰۰۰,۰۰۰ ریال وجه دریافتی برای ۴ ماه، ۳ ماه آن محقق شده است: (۸۰,۰۰۰,۰۰۰ ÷ ۴) × ۳ = ۶۰,۰۰۰,۰۰۰ ریال. بدهی پیش‌دریافت کاهش یافته (بدهکار) و درآمد مشاوره شناسایی می‌شود (بستانکار).'
+      },
+      {
+        id: 5,
+        topic: TOPICS.ACCRUALS_DEPR.id,
+        topicLabel: TOPICS.ACCRUALS_DEPR.short,
+        question:
+          'حقوق اسفندماه پرسنل جمعاً ۲۵۰,۰۰۰,۰۰۰ ریال است اما پرداخت و ثبت آن به فروردین سال بعد موکول شده است. ثبت تعدیلی پایان سال چیست؟',
+        options: [
+          'نیازی به ثبت نیست چون پرداخت نقدی در سال بعد انجام می‌شود',
+          'بدهکار: هزینه حقوق و دستمزد ۲۵۰,۰۰۰,۰۰۰ ریال | بستانکار: حقوق و دستمزد پرداختنی ۲۵۰,۰۰۰,۰۰۰ ریال',
+          'بدهکار: حقوق و دستمزد پرداختنی ۲۵۰,۰۰۰,۰۰۰ ریال | بستانکار: هزینه حقوق و دستمزد ۲۵۰,۰۰۰,۰۰۰ ریال',
+          'بدهکار: هزینه حقوق و دستمزد ۲۵۰,۰۰۰,۰۰۰ ریال | بستانکار: بانک ۲۵۰,۰۰۰,۰۰۰ ریال'
+        ],
+        correctIndex: 1,
+        explanation:
+          'این یک هزینه تحقق‌یافته ولی ثبت‌نشده است. کل ۲۵۰,۰۰۰,۰۰۰ ریال مربوط به خدمت اسفند است؛ پس هزینه حقوق و دستمزد بدهکار و بدهی حقوق و دستمزد پرداختنی بستانکار می‌شود.'
+      },
+      {
+        id: 6,
+        topic: TOPICS.ACCRUALS_DEPR.id,
+        topicLabel: TOPICS.ACCRUALS_DEPR.short,
+        question:
+          'ملک تجاری ماهیانه ۳۰,۰۰۰,۰۰۰ ریال اجاره داده شده و اجاره اسفند هنوز دریافت نشده است. ثبت تعدیلی پایان سال چگونه است؟',
+        options: [
+          'بدهکار: درآمد اجاره دریافتنی ۳۰,۰۰۰,۰۰۰ ریال | بستانکار: درآمد اجاره ۳۰,۰۰۰,۰۰۰ ریال',
+          'بدهکار: درآمد اجاره ۳۰,۰۰۰,۰۰۰ ریال | بستانکار: درآمد اجاره دریافتنی ۳۰,۰۰۰,۰۰۰ ریال',
+          'بدهکار: پیش‌دریافت اجاره ۳۰,۰۰۰,۰۰۰ ریال | بستانکار: درآمد اجاره ۳۰,۰۰۰,۰۰۰ ریال',
+          'بدهکار: حساب‌های دریافتنی ۳۰,۰۰۰,۰۰۰ ریال | بستانکار: پیش‌دریافت اجاره ۳۰,۰۰۰,۰۰۰ ریال'
+        ],
+        correctIndex: 0,
+        explanation:
+          'درآمد اجاره اسفند تحقق یافته ولی هنوز دریافت نشده است. مطالبه ایجادشده تحت عنوان «درآمد اجاره دریافتنی» بدهکار و «درآمد اجاره» بستانکار می‌گردد.'
+      },
+      {
+        id: 7,
+        topic: TOPICS.ACCRUALS_DEPR.id,
+        topicLabel: TOPICS.ACCRUALS_DEPR.short,
+        question:
+          'دستگاهی به بهای تمام‌شده ۴۰۰,۰۰۰,۰۰۰ ریال، عمر مفید ۵ سال و ارزش اسقاط صفر با روش خط مستقیم خریداری شده است. استهلاک سالانه و ثبت آن کدام است؟',
+        options: [
+          '۸۰,۰۰۰,۰۰۰ ریال — بدهکار: هزینه استهلاک ماشین‌آلات | بستانکار: استهلاک انباشته ماشین‌آلات',
+          '۸۰,۰۰۰,۰۰۰ ریال — بدهکار: استهلاک انباشته ماشین‌آلات | بستانکار: هزینه استهلاک ماشین‌آلات',
+          '۱۰۰,۰۰۰,۰۰۰ ریال — بدهکار: هزینه استهلاک ماشین‌آلات | بستانکار: ماشین‌آلات',
+          '۴۰,۰۰۰,۰۰۰ ریال — بدهکار: هزینه استهلاک ماشین‌آلات | بستانکار: استهلاک انباشته ماشین‌آلات'
+        ],
+        correctIndex: 0,
+        explanation:
+          'با روش خط مستقیم: (۴۰۰,۰۰۰,۰۰۰ - ۰) ÷ ۵ = ۸۰,۰۰۰,۰۰۰ ریال. هزینه استهلاک بدهکار و حساب کاهنده دارایی «استهلاک انباشته ماشین‌آلات» بستانکار می‌شود.'
+      },
+      {
+        id: 8,
+        topic: TOPICS.CONCEPTS.id,
+        topicLabel: TOPICS.CONCEPTS.short,
+        question: 'کدام مورد از تله‌ها و خطاهای رایج در ثبت‌های تعدیلی پایان سال محسوب می‌شود؟',
+        options: [
+          'بررسی مانده حساب‌ها در ۲۹ اسفند پیش از بستن حساب‌ها',
+          'زدن ثبت‌های تعدیلی به‌صورت روتین در وسط سال یا بی‌توجهی به اینکه ثبت اولیه در حساب دارایی/بدهی بوده یا هزینه/درآمد',
+          'محاسبه استهلاک دارایی‌های ثابت در پایان دوره مالی',
+          'شناسایی حقوق پرداخت‌نشده ماه پایانی سال'
+        ],
+        correctIndex: 1,
+        explanation:
+          'ثبت‌های تعدیلی مخصوص پایان دوره گزارشگری هستند و نحوه محاسبه سهم هزینه/درآمد به حسابی که در ثبت اولیه استفاده شده بستگی دارد؛ بی‌توجهی به این موارد یکی از خطاهای رایج است.'
+      },
+      {
+        id: 9,
+        topic: TOPICS.ACCRUALS_DEPR.id,
+        topicLabel: TOPICS.ACCRUALS_DEPR.short,
+        question:
+          'در کنار ثبت‌های تعدیلی قراردادی و زمانی، کدام دسته از برآوردها نیز در پایان سال باید مورد توجه قرار گیرند؟',
+        options: [
+          'ذخیره مطالبات مشکوک‌الوصول و ذخیره سنوات یا مرخصی پایان سال',
+          'موجودی اسکناس داخل جیب مدیرعامل',
+          'مبلغ پیش‌بینی‌شده فروش سال آینده بدون قرارداد',
+          'تعداد مشتریان بالقوه در شبکه‌های اجتماعی'
+        ],
+        correctIndex: 0,
+        explanation:
+          'برآوردهای حسابداری مانند ذخیره مطالبات مشکوک‌الوصول و ذخایر مزایای پایان خدمت (سنوات و مرخصی) برای انعکاس واقعی ریسک‌ها و تعهدات پایان سال ضروری‌اند.'
+      },
+      {
+        id: 10,
+        topic: TOPICS.CONCEPTS.id,
+        topicLabel: TOPICS.CONCEPTS.short,
+        question:
+          'اگر در پایان سال، هزینه تحقق‌یافته ثبت‌نشده‌ای (مثلاً هزینه بهره‌ یا حقوق معوق) عمداً یا سهواً ثبت نشود، چه اثری روی صورت‌های مالی دارد؟',
+        options: [
+          'سود خالص بیش از واقع و بدهی‌ها کمتر از واقع نشان داده می‌شود',
+          'سود خالص کمتر از واقع و دارایی‌ها بیش از واقع نشان داده می‌شود',
+          'هیچ اثری روی سود خالص ندارد و فقط نقدینگی تغییر می‌کند',
+          'حقوق مالکانه را افزایش می‌دهد ولی بدهی‌ها را تغییر نمی‌دهد'
+        ],
+        correctIndex: 0,
+        explanation:
+          'ثبت نکردن هزینه باعث کاهش غیرواقعی هزینه‌ها و در نتیجه بزرگ‌نمایی سود خالص و حقوق مالکانه و همچنین کمتر نشان دادن بدهی‌ها در ترازنامه می‌شود.'
+      }
+    ];
+
+    // حروف فارسی برای نمایش گزینه‌ها
+    const PERSIAN_LETTERS = ['الف', 'ب', 'ج', 'د'];
+
+    // وضعیت پاسخ‌های کاربر (کلید: شماره سوال، مقدار: ایندکس گزینه انتخاب‌شده)
+    const userAnswers = {};
+    let lastSummaryText = '';
+
+    // ارجاع به عناصر DOM
+    const questionsContainer = document.getElementById('questionsContainer');
+    const questionJumpNav = document.getElementById('questionJumpNav');
+    const topProgressBar = document.getElementById('topProgressBar');
+    const statAnswered = document.getElementById('statAnswered');
+    const statCorrect = document.getElementById('statCorrect');
+    const statScore = document.getElementById('statScore');
+    const submitHintText = document.getElementById('submitHintText');
+    const resultSection = document.getElementById('resultSection');
+    const toastBox = document.getElementById('toastBox');
+    const toastText = document.getElementById('toastText');
+
+    /**
+     * تبدیل اعداد لاتین به فارسی
+     */
+    function toFa(num) {
+      const digits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+      return String(num).replace(/\d/g, (d) => digits[Number(d)]);
+    }
+
+    /**
+     * جایگزین آواتار در صورت خطای بارگذاری تصویر محلی
+     */
+    function handleAvatarError(imgEl) {
+      imgEl.classList.add('hidden');
+      const fallback = document.getElementById('avatarFallback');
+      if (fallback) {
+        fallback.classList.remove('hidden');
+        fallback.classList.add('flex');
+      }
+    }
+
+    /**
+     * نمایش پیام اطلاع‌رسانی کوتاه
+     */
+    function showToast(message) {
+      toastText.textContent = message;
+      toastBox.classList.remove('opacity-0', 'translate-y-2');
+      toastBox.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(window.__toastTimeout);
+      window.__toastTimeout = setTimeout(() => {
+        toastBox.classList.remove('opacity-100', 'translate-y-0');
+        toastBox.classList.add('opacity-0', 'translate-y-2');
+      }, 2400);
+    }
+
+    /**
+     * رندر کل سوالات و دکمه‌های پرش سریع
+     */
+    function renderQuiz() {
+      questionsContainer.innerHTML = '';
+      questionJumpNav.innerHTML = '';
+
+      QUIZ_QUESTIONS.forEach((q, qIdx) => {
+        // دکمه پرش شماره سوال در نوار بالای کارت معرفی
+        const jumpBtn = document.createElement('button');
+        jumpBtn.type = 'button';
+        jumpBtn.id = `jump-btn-${q.id}`;
+        jumpBtn.textContent = toFa(q.id);
+        jumpBtn.setAttribute('aria-label', `رفتن به سوال ${q.id}`);
+        jumpBtn.className =
+          'w-8 h-8 rounded-xl text-xs font-extrabold bg-[#0b1120] hover:bg-[#1e293b] text-slate-300 border border-slate-700/80 transition cursor-pointer';
+        jumpBtn.addEventListener('click', () => {
+          const targetCard = document.getElementById(`question-card-${q.id}`);
+          if (targetCard) {
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+        questionJumpNav.appendChild(jumpBtn);
+
+        // ساخت کارت هر سوال
+        const card = document.createElement('article');
+        card.id = `question-card-${q.id}`;
+        card.className = 'glass-card rounded-3xl p-5 sm:p-6 space-y-4';
+
+        const optionsHtml = q.options
+          .map((optText, optIdx) => {
+            const letter = PERSIAN_LETTERS[optIdx] || toFa(optIdx + 1);
+            return `
+              <button
+                type="button"
+                id="q-${q.id}-opt-${optIdx}"
+                data-qid="${q.id}"
+                data-opt="${optIdx}"
+                class="option-btn w-full text-right rounded-2xl bg-[#0b1120]/85 hover:bg-[#1e293b] border border-slate-700/80 hover:border-[#d4af37]/50 p-3.5 sm:p-4 flex items-start gap-3 cursor-pointer"
+              >
+                <span class="option-badge w-7 h-7 rounded-xl bg-[#1e293b] text-[#f3d27a] border border-slate-600/70 text-xs font-black flex items-center justify-center shrink-0 mt-0.5">
+                  ${letter}
+                </span>
+                <span class="text-xs sm:text-sm font-semibold text-slate-100 leading-relaxed flex-1">
+                  ${optText}
+                </span>
+                <span class="option-status text-xs font-extrabold shrink-0 mt-0.5 hidden"></span>
+              </button>
+            `;
+          })
+          .join('');
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1 rounded-xl bg-[#d4af37]/15 text-[#f3d27a] border border-[#d4af37]/35 text-xs font-black">
+                سوال ${toFa(q.id)} از ${toFa(QUIZ_QUESTIONS.length)}
+              </span>
+              <span class="px-2.5 py-1 rounded-xl bg-slate-800/90 text-slate-300 text-[11px] font-semibold border border-slate-700/70">
+                ${q.topicLabel}
+              </span>
+            </div>
+            <span id="q-badge-${q.id}" class="text-xs font-bold text-slate-400">
+              ۱۰ نمره
+            </span>
+          </div>
+
+          <h3 class="text-sm sm:text-base font-extrabold text-white leading-relaxed">
+            ${q.question}
+          </h3>
+
+          <div class="space-y-2.5" role="radiogroup" aria-label="گزینه‌های سوال ${q.id}">
+            ${optionsHtml}
+          </div>
+
+          <!-- باکس تصحیح لحظه‌ای و توضیح تشریحی -->
+          <div id="feedback-${q.id}" class="hidden rounded-2xl p-4 border feedback-reveal space-y-1.5">
+            <div id="feedback-title-${q.id}" class="text-xs sm:text-sm font-black"></div>
+            <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+              <strong class="text-[#f3d27a]">توضیح حسابداری:</strong> ${q.explanation}
+            </p>
+          </div>
+        `;
+
+        questionsContainer.appendChild(card);
+
+        // اتصال رویداد کلیک به گزینه‌های این سوال
+        q.options.forEach((_, optIdx) => {
+          const btn = card.querySelector(`#q-${q.id}-opt-${optIdx}`);
+          btn.addEventListener('click', () => handleSelectOption(q.id, optIdx));
+        });
+      });
+
+      updateLiveStats();
+    }
+
+    /**
+     * تصحیح لحظه‌ای هنگام انتخاب گزینه توسط کاربر
+     */
+    function handleSelectOption(questionId, selectedIdx) {
+      const question = QUIZ_QUESTIONS.find((item) => item.id === questionId);
+      if (!question) return;
+
+      userAnswers[questionId] = selectedIdx;
+      const isCorrect = selectedIdx === question.correctIndex;
+
+      // به‌روزرسانی ظاهر گزینه‌های سوال
+      question.options.forEach((_, idx) => {
+        const optBtn = document.getElementById(`q-${questionId}-opt-${idx}`);
+        const badge = optBtn.querySelector('.option-badge');
+        const statusEl = optBtn.querySelector('.option-status');
+
+        // ریست استایل‌های قبلی گزینه
+        optBtn.className =
+          'option-btn w-full text-right rounded-2xl p-3.5 sm:p-4 flex items-start gap-3 cursor-pointer border ';
+        badge.className =
+          'option-badge w-7 h-7 rounded-xl text-xs font-black flex items-center justify-center shrink-0 mt-0.5 ';
+        statusEl.classList.add('hidden');
+        statusEl.textContent = '';
+
+        if (idx === question.correctIndex) {
+          // گزینه صحیح همواره سبز برجسته می‌شود
+          optBtn.className += 'bg-emerald-950/55 border-emerald-400/80 text-white';
+          badge.className += 'bg-emerald-500 text-slate-950 border border-emerald-300';
+          statusEl.textContent = '✓ صحیح';
+          statusEl.className = 'option-status text-xs font-extrabold text-emerald-300 shrink-0 mt-0.5';
+        } else if (idx === selectedIdx && !isCorrect) {
+          // گزینه نادرست انتخاب‌شده توسط کاربر قرمز می‌شود
+          optBtn.className += 'bg-rose-950/55 border-rose-400/80 text-white';
+          badge.className += 'bg-rose-500 text-white border border-rose-300';
+          statusEl.textContent = '✕ انتخاب شما';
+          statusEl.className = 'option-status text-xs font-extrabold text-rose-300 shrink-0 mt-0.5';
+        } else {
+          // سایر گزینه‌ها خنثی و کم‌رنگ‌تر
+          optBtn.className += 'bg-[#0b1120]/65 border-slate-800 text-slate-400 opacity-80';
+          badge.className += 'bg-slate-800 text-slate-400 border border-slate-700';
+        }
+      });
+
+      // نمایش باکس توضیح تشریحی در لحظه
+      const feedbackBox = document.getElementById(`feedback-${questionId}`);
+      const feedbackTitle = document.getElementById(`feedback-title-${questionId}`);
+      const qBadge = document.getElementById(`q-badge-${questionId}`);
+      const jumpBtn = document.getElementById(`jump-btn-${questionId}`);
+
+      feedbackBox.classList.remove('hidden', 'bg-emerald-950/35', 'border-emerald-500/40', 'bg-rose-950/35', 'border-rose-500/40');
+
+      if (isCorrect) {
+        feedbackBox.classList.add('bg-emerald-950/35', 'border-emerald-500/40');
+        feedbackTitle.className = 'text-xs sm:text-sm font-black text-emerald-300';
+        feedbackTitle.textContent = 'آفرین! پاسخ شما صحیح است (+۱۰ نمره)';
+        qBadge.textContent = 'صحیح • ۱۰/۱۰';
+        qBadge.className = 'text-xs font-extrabold text-emerald-400';
+        if (jumpBtn) {
+          jumpBtn.className =
+            'w-8 h-8 rounded-xl text-xs font-black bg-emerald-500/20 text-emerald-300 border border-emerald-400/60 transition cursor-pointer';
+        }
+      } else {
+        feedbackBox.classList.add('bg-rose-950/35', 'border-rose-500/40');
+        feedbackTitle.className = 'text-xs sm:text-sm font-black text-rose-300';
+        feedbackTitle.textContent = `پاسخ نادرست بود • گزینه درست «${PERSIAN_LETTERS[question.correctIndex]}» است (۰/۱۰ نمره)`;
+        qBadge.textContent = 'نیاز به مرور • ۰/۱۰';
+        qBadge.className = 'text-xs font-extrabold text-rose-400';
+        if (jumpBtn) {
+          jumpBtn.className =
+            'w-8 h-8 rounded-xl text-xs font-black bg-rose-500/20 text-rose-300 border border-rose-400/60 transition cursor-pointer';
+        }
+      }
+
+      updateLiveStats();
+
+      // اگر کارنامه باز بود، بلافاصله نمره و تحلیل هوشمند را هم به‌روزرسانی کن
+      if (!resultSection.classList.contains('hidden')) {
+        computeSmartScore(false);
+      }
+    }
+
+    /**
+     * محاسبه آمار لحظه‌ای (تعداد پاسخ، تعداد صحیح، نمره و نوار پیشرفت)
+     */
+    function getScoreSnapshot() {
+      let answeredCount = 0;
+      let correctCount = 0;
+
+      QUIZ_QUESTIONS.forEach((q) => {
+        if (Object.prototype.hasOwnProperty.call(userAnswers, q.id)) {
+          answeredCount += 1;
+          if (userAnswers[q.id] === q.correctIndex) {
+            correctCount += 1;
+          }
+        }
+      });
+
+      const score = correctCount * 10;
+      return { answeredCount, correctCount, score };
+    }
+
+    function updateLiveStats() {
+      const { answeredCount, correctCount, score } = getScoreSnapshot();
+      const total = QUIZ_QUESTIONS.length;
+      const pct = Math.round((answeredCount / total) * 100);
+
+      statAnswered.textContent = `${toFa(answeredCount)} از ${toFa(total)}`;
+      statCorrect.textContent = toFa(correctCount);
+      statScore.textContent = toFa(score);
+      topProgressBar.style.width = `${pct}%`;
+
+      if (answeredCount === total) {
+        submitHintText.textContent = 'عالی! به همه ۱۰ سوال پاسخ دادید. برای مشاهده تحلیل کامل روی دکمه محاسبه نمره کلیک کنید.';
+      } else if (answeredCount > 0) {
+        submitHintText.textContent = `${toFa(answeredCount)} سوال پاسخ داده شده و ${toFa(total - answeredCount)} سوال باقی مانده است.`;
+      } else {
+        submitHintText.textContent = 'می‌توانید همین الان یا پس از پاسخ به هر ۱۰ سوال، نمره و تحلیل موضوعی خود را محاسبه کنید.';
+      }
+    }
+
+    /**
+     * تعیین سطح عملکرد و پیام تشویقی بر اساس نمره از ۱۰۰
+     */
+    function getScoreTier(score) {
+      if (score >= 90) {
+        return {
+          badge: 'عالی و حرفه‌ای • تسلط بالا',
+          headline: 'درخشش فوق‌العاده در ثبت‌های تعدیلی پایان سال!',
+          message:
+            'تسلط شما بر مبنای تعهدی، اصل تطابق و ثبت‌های تعدیلی در سطح بسیار عالی است و آماده اجرای دقیق در بستن حساب‌های پایان دوره هستید.'
+        };
+      }
+      if (score >= 70) {
+        return {
+          badge: 'خوب و قابل قبول • مسیر درست',
+          headline: 'عملکرد خوب! با کمی دقت بیشتر به سطح عالی می‌رسید',
+          message:
+            'مفاهیم اصلی را به‌خوبی درک کرده‌اید؛ فقط کافی است نکات ظریف و مواردی که در آن‌ها خطا داشته‌اید را یک بار مرور کنید.'
+        };
+      }
+      if (score >= 50) {
+        return {
+          badge: 'نیاز به مرور • پایه نیمه‌آماده',
+          headline: 'نیاز به مرور هدفمند مفاهیم و مثال‌های عددی',
+          message:
+            'بخشی از سوالات را درست پاسخ داده‌اید اما برخی تفاوت‌های بدهکار/بستانکار و زمان‌بندی تعدیل‌ها نیاز به تمرین مجدد دارد.'
+        };
+      }
+      return {
+        badge: 'نیاز به مطالعه مجدد • شروع دوباره',
+        headline: 'فرصت عالی برای یادگیری عمیق و اصولی',
+        message:
+          'نگران نباشید؛ ثبت‌های تعدیلی با تمرین چند مثال عددی کاملاً جا می‌افتد. توضیحات هر سوال را بخوانید و دوباره آزمون را امتحان کنید.'
+      };
+    }
+
+    /**
+     * محاسبه نمره هوشمند و تحلیل موضوعی دقیق
+     */
+    function computeSmartScore(shouldScroll = true) {
+      const { answeredCount, correctCount, score } = getScoreSnapshot();
+      const tier = getScoreTier(score);
+
+      // محاسبه عملکرد هر محور موضوعی
+      const topicStats = {};
+      Object.values(TOPICS).forEach((t) => {
+        const qs = QUIZ_QUESTIONS.filter((q) => q.topic === t.id);
+        const correctInTopic = qs.filter((q) => userAnswers[q.id] === q.correctIndex).length;
+        const answeredInTopic = qs.filter((q) => Object.prototype.hasOwnProperty.call(userAnswers, q.id)).length;
+        const pct = qs.length > 0 ? Math.round((correctInTopic / qs.length) * 100) : 0;
+
+        topicStats[t.id] = {
+          ...t,
+          total: qs.length,
+          answered: answeredInTopic,
+          correct: correctInTopic,
+          pct
+        };
+      });
+
+      // پر کردن بخش‌های کارنامه
+      document.getElementById('scoreTierBadge').textContent = tier.badge;
+      document.getElementById('scoreHeadline').textContent = tier.headline;
+      document.getElementById('scoreEncouragement').textContent = tier.message;
+      document.getElementById('finalScoreNumber').textContent = toFa(score);
+      document.getElementById('finalAccuracyText').textContent =
+        `${toFa(correctCount)} از ${toFa(QUIZ_QUESTIONS.length)} پاسخ صحیح (${toFa(answeredCount)} پاسخ‌داده‌شده)`;
+
+      // رندر کارت‌های تحلیل هر محور
+      const breakdownGrid = document.getElementById('topicBreakdownGrid');
+      breakdownGrid.innerHTML = '';
+
+      const strengths = [];
+      const weaknesses = [];
+
+      Object.values(topicStats).forEach((st) => {
+        if (st.pct >= 70) {
+          strengths.push(st.short);
+        } else {
+          weaknesses.push(st.short);
+        }
+
+        const statusLabel =
+          st.pct >= 75 ? 'نقطه قوت' : st.pct >= 50 ? 'قابل قبول' : 'نیاز به تمرین';
+        const statusColor =
+          st.pct >= 75
+            ? 'text-emerald-300 bg-emerald-500/15 border-emerald-500/35'
+            : st.pct >= 50
+            ? 'text-[#f3d27a] bg-[#d4af37]/15 border-[#d4af37]/35'
+            : 'text-rose-300 bg-rose-500/15 border-rose-500/35';
+
+        const card = document.createElement('div');
+        card.className = 'rounded-2xl bg-[#0b1120]/90 border border-slate-700/80 p-4 space-y-2.5';
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-2">
+            <h4 class="text-xs sm:text-sm font-extrabold text-white leading-snug">${st.title}</h4>
+            <span class="px-2 py-0.5 rounded-lg text-[10px] font-black border shrink-0 ${statusColor}">${statusLabel}</span>
+          </div>
+          <div class="flex items-center justify-between text-xs text-slate-300">
+            <span>صحیح: <strong class="text-white">${toFa(st.correct)} از ${toFa(st.total)}</strong></span>
+            <span class="font-extrabold text-[#f3d27a]">${toFa(st.pct)}٪</span>
+          </div>
+          <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+            <div class="h-full rounded-full bg-gradient-to-l from-[#f3d27a] to-[#d4af37]" style="width: ${st.pct}%;"></div>
+          </div>
+        `;
+        breakdownGrid.appendChild(card);
+      });
+
+      // متن تشخیص هوشمند نقاط قوت و نقاط ضعف
+      const diagBox = document.getElementById('smartDiagnosticBox');
+      const strengthText =
+        strengths.length > 0
+          ? `<strong class="text-emerald-300">نقاط قوت شما:</strong> در محورهای «${strengths.join('، ')}» عملکرد مطلوبی داشته‌اید.`
+          : `<strong class="text-emerald-300">نقاط قوت شما:</strong> با مرور دقیق‌تر فرمول‌ها و ثبت‌ها، نقاط قوت خود را تثبیت کنید.`;
+
+      const weaknessText =
+        weaknesses.length > 0
+          ? `<strong class="text-rose-300">محورهای نیازمند مرور بیشتر:</strong> پیشنهاد می‌شود روی «${weaknesses.join('، ')}» تمرکز و تمرین بیشتری انجام دهید.`
+          : `<strong class="text-[#f3d27a]">جمع‌بندی هوشمند:</strong> در تمامی محورهای آزمون تسلط یکنواخت و بسیار خوبی نشان داده‌اید!`;
+
+      const unansweredWarning =
+        answeredCount < QUIZ_QUESTIONS.length
+          ? `<p class="text-xs text-amber-300/90 pt-1">توجه: به ${toFa(QUIZ_QUESTIONS.length - answeredCount)} سوال هنوز پاسخی داده نشده که در محاسبه نمره از ۱۰۰ بدون امتیاز لحاظ شده‌اند.</p>`
+          : '';
+
+      diagBox.innerHTML = `
+        <p>${strengthText}</p>
+        <p>${weaknessText}</p>
+        ${unansweredWarning}
+      `;
+
+      // ساخت متن خلاصه برای کپی کردن
+      lastSummaryText = [
+        '📊 کارنامه آزمون ۱۰ سوالی: ثبت‌های تعدیلی و اصلاحی پایان سال (@financialmind_ir)',
+        `• نمره: ${toFa(score)} از ۱۰۰ (${toFa(correctCount)} از ${toFa(QUIZ_QUESTIONS.length)} پاسخ صحیح)`,
+        `• سطح عملکرد: ${tier.badge}`,
+        `• نقاط قوت: ${strengths.length ? strengths.join('، ') : 'در حال تقویت'}`,
+        `• نیازمند مرور: ${weaknesses.length ? weaknesses.join('، ') : 'مورد خاصی مشاهده نشد'}`
+      ].join('\n');
+
+      resultSection.classList.remove('hidden');
+
+      if (shouldScroll) {
+        resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    /**
+     * کپی خلاصه نتیجه به کلیپ‌بورد (با پشتیبانی از execCommand در محیط‌های محدود)
+     */
+    function copyResultSummary() {
+      if (!lastSummaryText) {
+        computeSmartScore(false);
+      }
+
+      const textarea = document.createElement('textarea');
+      textarea.value = lastSummaryText;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      try {
+        const ok = document.execCommand('copy');
+        if (ok) {
+          showToast('خلاصه نتیجه آزمون کپی شد!');
+        } else {
+          showToast('کپی انجام نشد؛ لطفاً متن را دستی انتخاب کنید.');
+        }
+      } catch (err) {
+        console.error('خطا در کپی خلاصه نتیجه:', err);
+        showToast('امکان کپی خودکار در این مرورگر وجود نداشت.');
+      } finally {
+        document.body.removeChild(textarea);
+      }
+    }
+
+    /**
+     * ریست کامل آزمون و پاک‌سازی پاسخ‌ها و کارنامه
+     */
+    function resetQuiz() {
+      Object.keys(userAnswers).forEach((key) => delete userAnswers[key]);
+      lastSummaryText = '';
+      resultSection.classList.add('hidden');
+      renderQuiz();
+      updateLiveStats();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast('آزمون ریست شد؛ می‌توانید از ابتدا شروع کنید.');
+    }
+
+    // ثبت رویدادهای دکمه‌ها
+    document.getElementById('btnCalculateSmart').addEventListener('click', () => computeSmartScore(true));
+    document.getElementById('btnResetBottom').addEventListener('click', resetQuiz);
+    document.getElementById('headerResetBtn').addEventListener('click', resetQuiz);
+    document.getElementById('btnRetakeQuiz').addEventListener('click', resetQuiz);
+    document.getElementById('btnCopySummary').addEventListener('click', copyResultSummary);
+
+    // اجرای اولیه آزمون هنگام بارگذاری صفحه
+    window.addEventListener('DOMContentLoaded', () => {
+      renderQuiz();
+    });
+  </script>
+</body>
+</html>
